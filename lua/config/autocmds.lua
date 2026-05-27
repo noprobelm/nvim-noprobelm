@@ -7,6 +7,22 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 --
+
+-- Register WGSL filetype
+vim.filetype.add({
+  extension = {
+    wgsl = "wgsl",
+  },
+})
+
+-- Set comment string for WGSL files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "wgsl",
+  callback = function()
+    vim.bo.commentstring = "// %s"
+  end,
+  group = vim.api.nvim_create_augroup("WGSLConfig", { clear = true }),
+})
 -- Auto-change directory to project root when entering a buffer
 vim.api.nvim_create_autocmd("BufEnter", {
   group = vim.api.nvim_create_augroup("AutoProjectRoot", { clear = true }),
